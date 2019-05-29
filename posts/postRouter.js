@@ -35,20 +35,18 @@ router.get('/:id', (req, res) => {
 
 
 router.delete('/:id', (req, res) => {
-    // try {
-    //     const count = await Posts.remove(req.params.id);
-    //     if (count > 0) {
-    //       res.status(200).json({ posts, message: 'The post has been nuked' });
-    //     } else {
-    //       res.status(404).json({ posts, message: 'The post could not be found' });
-    //     }
-    //   } catch (error) {
-    //     // log error to server
-    //     console.log(error);
-    //     res.status(500).json({
-    //       message: 'Error removing the hub',
-    //     });
-    //   }
+    const {id} = req.params;
+    Posts.remove(id)
+    .then(id => {
+        if(id) {
+            res.json('user has been removed')
+        } else {
+            res.status(404).json('invalid ID')
+        }
+    })
+    .catch(err => {
+        res.status(500).json('I could not delete that user')
+    })
 });
 
 router.put('/:id', (req, res) => {
