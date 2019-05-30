@@ -4,25 +4,20 @@ const db = require("./userDb")
 const postDb = require("../posts/postDb")
 const router = express.Router();
 
-router.post('/', validateUser, async (req, res) => {
-    // const user = req.body;
-    // db.insert(user)
-    //   .then(user => {
-    //     res.status(201).json(user);
-    //   })
-    //   .catch(err => {
-    //     res.status(500).json({
-    //       error: "There was an error while saving the user to the database"
-    //     });
-    //   });
-    // try {
-    //     const users = await users.insert(req.body);
-    //     res.status(201).json(users);
-    // } catch (error)
-    // res.status(500).json({message: 'Error adding users' ,})
+router.post('/', validateUser, (req, res) => {
+    const user = req.body;
+    db.insert(user)
+    .then(user => {
+    res.status(201).json(user);
+    })
+    .catch(err => {
+    res.status(500).json({
+    error: "There was an error while saving the user to the database"
+    });
+  });
 });
 
-router.post('/:id/posts', validateUserId, validatePost, async (req, res) => {
+router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
     const post = req.body;
     postDb.insert(post)
     .then(post => {
@@ -48,12 +43,12 @@ router.get('/', async (req, res) => {
       }
  });
 
-router.get('/:id', validateUserId, async (req, res) => {
+router.get('/:id', validateUserId, (req, res) => {
   user = req.user;
   res.status(200).json(user);
 });
 
-router.get('/:id/posts', validateUserId, async (req, res) => {
+router.get('/:id/posts', validateUserId, (req, res) => {
     const {id} = req.params.id;
     db.getUserPosts(id).then(posts => {
       res.status(200).json(posts);
@@ -93,7 +88,7 @@ router.put('/:id', validateUserId, (req, res) => {
 
 function validateUserId(req, res, next) {
     const id = req.params.id;
-  db.getById(id).then(user => {
+    db.getById(id).then(user => {
     console.log(user);
     if (!user) {
       res.status(400).json({ message: "invalid user id" })
