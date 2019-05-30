@@ -11,7 +11,7 @@ server.use("/api/users", userRouter)
 
 
 server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>` , {NewMessage: process.env.MOTD, shoutouts })
+  res.send(`<h2>Let's write some middleware!</h2>` , {NewMessage: process.env.MOTD })
 });
 
 //custom middleware
