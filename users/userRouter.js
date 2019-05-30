@@ -12,7 +12,7 @@ router.post('/', validateUser, (req, res) => {
     })
     .catch(err => {
     res.status(500).json({
-    error: "There was an error while saving the user to the database"
+    error: "There was an error while saving the user"
     });
   });
 });
@@ -25,7 +25,7 @@ router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
     })
     .catch(err => {
       res.status(500).json({
-        error: "There was an error while saving the post to the database"
+        error: "There was an error while saving the post"
       });
     });
 });
@@ -55,7 +55,7 @@ router.get('/:id/posts', validateUserId, (req, res) => {
     }).catch(err => {
       res
         .status(500)
-        .json({ error: "The posts information could not be retrieved." });
+        .json({ error: "The information could not be retrieved." });
     })
 });
 
@@ -116,9 +116,9 @@ function validatePost(req, res, next) {
     if (!req.body) {
         res.status(400).json({ message: "missing post data" })
       } else if (!req.body.text) {
-        res.status(400).json({ message: "missing required text field" })
+        res.status(400).json({ message: "missing required text" })
       } else if (!req.body.user_id) {
-        res.status(400).json({ message: "missing required user id field" })
+        res.status(400).json({ message: "missing required user id" })
       } else {
         next();
       }
